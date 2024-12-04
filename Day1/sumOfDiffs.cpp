@@ -46,7 +46,6 @@ int main() {
         long leftIn = 0;
         long rightIn = 0;
         parseNums(line, leftIn, rightIn);
-        cout << "LeftIn = " << leftIn << ", RightIn = " << rightIn << endl;
         left_list.push_back(leftIn);
         right_list.push_back(rightIn);
     }
@@ -54,17 +53,36 @@ int main() {
     sort(left_list.begin(), left_list.end());
     sort (right_list.begin(), right_list.end());
 
+
+    // Part 1
     long sumOfDiffs = 0;
 
-
     for (int i=0; i < left_list.size() && i < right_list.size(); i++) {
-        cout << i << ": Left val = " << left_list[i]  << ", Right val = " << right_list[i] << '\n';
-
         sumOfDiffs += abs(left_list[i] - right_list[i]);
-        cout << "current sum = " << sumOfDiffs << endl;
     }
 
-    cout << "Sum of differences = " <<sumOfDiffs << endl;
+    cout << "Part 1: Sum of differences = " <<sumOfDiffs << endl;
+
+
+    // Part 2
+    long similarityScore = 0;
+
+    for (int i=0; i < left_list.size(); i++) {
+        int j=0;
+        long simScoreAdd = 0;
+        while (j < right_list.size() && right_list[j] < left_list[i]) {
+            j++;
+        }
+        if (j < right_list.size()) {
+            while (j < right_list.size() && left_list[i] == right_list[j]) {
+                simScoreAdd += left_list[i];
+                j++;
+            }
+        }
+        similarityScore += simScoreAdd;
+    }
+
+    cout << "Part 2: Similarity Score = " << similarityScore << endl;
 
     return 0;
 }
